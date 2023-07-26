@@ -1,0 +1,37 @@
+area subsections:
+cardinal directions
+underwater
+
+types of encounters:
+gen i
+tall grass
+fishing
+surfing on water
+interact
+gen ii:
+rock smash (ii, iii, HG/SS, and vi only)
+tree headbutt (ii and HG/SS only)
+sweet scent (ii - vi, summons horde in vi)
+roaming (ii - vi, except B2W2 and ORAS)
+(time-based) (ii, iv, SMUSUM)
+(mass outbreaks) (ii-v, BDSP, PLA, ix)
+gen iii:
+deep sand (RSE, v, ORAS)
+Underwater sections
+gen iv:
+honey (sinnoh)
+double wilds
+gen v:
+(season-based) (v only)
+puddles (v only)
+phenomena (v only) - rustling grass, dust cloud, flying pokemon's shadow, rippling water
+dark grass/double wild grass (v only)
+gen vi:
+snow (XY)
+ambush (XY, SMUSUM) - ceiling drop in caves, shaking trash cans, swoop down in victory road, rustling bushes
+soaring (ORAS)
+hordes (vi) - mixed
+gen vii:
+additional ambushes - (SM) rustling grass, dirt clouds, flying shadows, vast poni canyon trial, wimpod chase, rustling trees, sand clouds, water splashes, (USUM) invisible Kecleon
+SOS call (vii only)
+berry piles
