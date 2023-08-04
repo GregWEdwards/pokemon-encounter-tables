@@ -9,27 +9,43 @@ import {
   Label,
   Form,
   Dropdown,
-  SemanticCOLORS,
-  DropdownItemProps,
   Button,
   Table,
   Image,
 } from "semantic-ui-react"
 import games, { gamesType } from "../data/GameData"
+import { EncountersForm } from "./EncountersForm"
 
-type DropdownMenuItemType = { key: string; text: string; value: string }
+const GAMES_DROPDOWN_INITIAL_VALS: Array<DropdownMenuItemType> = [
+  { key: "fr", text: "FireRed", value: "FR" },
+  { key: "lg", text: "LeafGreen", value: "LG" },
+  { key: "hg", text: "HeartGold", value: "HG" },
+]
 
-type TypesOfEncounters = "grass" | "surf" | "fish" | "interact"
-type EncounterType = {
-  index: number
-  type: TypesOfEncounters | null
+const ENCOUNTERS_INITIAL_VALS: Array<EncountersType> = ["grass", "surf"]
+
+export type DropdownMenuItemType = {
+  key: string
+  text: string
+  value: string
 }
+
+export const encounterTypes = {
+  grass: "Rustling Grass",
+  surf: "Surfing",
+  fish: "Fishing",
+  interact: "Interact",
+}
+let NUMBER_OF_ENCOUNTER_TYPES = Object.keys(encounterTypes).length
+export type EncountersType = keyof typeof encounterTypes | null
 
 const gameDropdownOptions: DropdownMenuItemType[] = games.map(
   (game: gamesType) => {
     return { key: game.key, text: game.title, value: game.display }
   }
 )
+
+//TODO: Use the below function to robustify the look of the labels in the game selection dropdown
 
 // const renderDropdownLabel = (menuItem: DropdownItemProps) => ({
 //   color: games.find((game) => (game.title = menuItem.text as string))
@@ -39,13 +55,27 @@ const gameDropdownOptions: DropdownMenuItemType[] = games.map(
 // })
 
 const PageBody = () => {
+  //TODO: Raise all of the following states to a Context and implement a reducer to make changing the state in lower-level components simpler as well as converting the data to JSON later
   const [areaName, setAreaName] = useState<string>("")
-  //gamesChosen will need to be raised to here as well as encounters
+  const [gamesChosen, setGamesChosen] = useState<
+    Array<DropdownMenuItemType>
+  >(GAMES_DROPDOWN_INITIAL_VALS)
+  const [encounters, setEncounters] = useState<Array<EncountersType>>(
+    ENCOUNTERS_INITIAL_VALS
+  )
   return (
     <div className='App-body'>
       <Grid columns={2}>
         <Grid.Column>
-          <LeftColumn areaName={areaName} setAreaName={setAreaName} />
+          {/*TODO: Separate these into separate files*/}
+          <LeftColumn
+            areaName={areaName}
+            setAreaName={setAreaName}
+            gamesChosen={gamesChosen}
+            setGamesChosen={setGamesChosen}
+            encounters={encounters}
+            setEncounters={setEncounters}
+          />
         </Grid.Column>
         <Grid.Column>
           <RightColumn areaName={areaName} />
@@ -58,102 +88,30 @@ const PageBody = () => {
 type LeftColumnProps = {
   areaName: string
   setAreaName: React.Dispatch<React.SetStateAction<string>>
+  gamesChosen: Array<DropdownMenuItemType>
+  setGamesChosen: React.Dispatch<
+    React.SetStateAction<Array<DropdownMenuItemType>>
+  >
+  encounters: Array<EncountersType>
+  setEncounters: React.Dispatch<
+    React.SetStateAction<Array<EncountersType>>
+  >
 }
 
 const LeftColumn: React.FC<LeftColumnProps> = ({
   areaName,
   setAreaName,
+  gamesChosen,
+  setGamesChosen /*TODO: This isn't being used because the Dropdown isn't controlled yet*/,
+  encounters,
+  setEncounters,
 }) => {
-  const [gamesChosen, setGamesChosen] = useState<
-    Array<DropdownMenuItemType>
-  >([
-    { key: "fr", text: "FireRed", value: "FR" },
-    { key: "lg", text: "LeafGreen", value: "LG" },
-    { key: "hg", text: "HeartGold", value: "HG" },
-  ])
-
-  const [encounters, setEncounters] = useState<Array<EncounterType>>([
-    { index: 0, type: "grass" },
-    { index: 1, type: "surf" },
-  ])
-
-  const EncounterTypeTray: React.FC<{
-    index: number
-    type: TypesOfEncounters | null
-  }> = ({ index, type }) => {
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          marginBottom: "12px",
-        }}
-      >
-        <p style={{ marginRight: "12px" }}>Encounter Type</p>
-        <Button
-          size='tiny'
-          active={type === "grass"}
-          onClick={() => {
-            setEncounters(
-              encounters
-                .slice(0, index)
-                .concat([{ index: index, type: "grass" }])
-                .concat(encounters.slice(index + 1, encounters.length))
-            )
-          }}
-        >
-          Rustling Grass
-        </Button>
-        <Button
-          size='tiny'
-          active={type === "surf"}
-          onClick={() => {
-            setEncounters(
-              encounters
-                .slice(0, index)
-                .concat([{ index: index, type: "surf" }])
-                .concat(encounters.slice(index + 1, encounters.length))
-            )
-          }}
-        >
-          Surfing
-        </Button>
-        <Button
-          size='tiny'
-          active={type === "fish"}
-          onClick={() => {
-            setEncounters(
-              encounters
-                .slice(0, index)
-                .concat([{ index: index, type: "fish" }])
-                .concat(encounters.slice(index + 1, encounters.length))
-            )
-          }}
-        >
-          Fishing
-        </Button>
-        <Button
-          size='tiny'
-          active={type === "interact"}
-          onClick={() => {
-            setEncounters(
-              encounters
-                .slice(0, index)
-                .concat([{ index: index, type: "interact" }])
-                .concat(encounters.slice(index + 1, encounters.length))
-            )
-          }}
-        >
-          Interact
-        </Button>
-      </div>
-    )
-  }
-
   return (
     <>
       <Segment.Group vertical floated='left' id='config'>
-        <Segment className='primary-config'>
+        <Segment
+          className='primary-config' /*TODO: This className isn't doing anything currently*/
+        >
           <Form relaxed>
             <Form.Field>
               <Input
@@ -162,6 +120,7 @@ const LeftColumn: React.FC<LeftColumnProps> = ({
                 placeholder={"Route 1"}
                 onChange={(e) => setAreaName(e.target.value)}
                 fluid
+                /*TODO: Devise a way to batch the calls to setAreaName so that the table's header doesn't change until the user is done typing*/
               />
             </Form.Field>
             <Form.Field>
@@ -170,7 +129,9 @@ const LeftColumn: React.FC<LeftColumnProps> = ({
               </Label>
               <Checkbox
                 style={{ paddingLeft: "8px", verticalAlign: "sub" }}
+                /*TODO: Implement Sections, hook up this form to the table*/
               />
+              {/*TODO: Add Clear button, function to bring up 'Are you sure?' Modal, and data-wipe function for the 'Yes, clear' button on the Modal*/}
             </Form.Field>
             <Form.Field
               style={{
@@ -182,7 +143,9 @@ const LeftColumn: React.FC<LeftColumnProps> = ({
               <Label basic size='large'>
                 Percentages
               </Label>
-              <Radio toggle />
+              <Radio
+                toggle /*TODO: Control this form so that the EncountersForm toggles between numeric input and dropdown input*/
+              />
               <Label basic size='large'>
                 Rarity
               </Label>
@@ -192,7 +155,13 @@ const LeftColumn: React.FC<LeftColumnProps> = ({
         <Segment id='secondary-config'>
           <Form>
             <Form.Field>
-              <Label basic size='large' style={{ marginRight: "8px" }}>
+              <Label
+                basic
+                size='large'
+                style={{
+                  marginRight: "8px",
+                }} /*TODO: Get the Label and the Dropdown on the same line*/
+              >
                 Games:
               </Label>
               <Dropdown
@@ -200,40 +169,23 @@ const LeftColumn: React.FC<LeftColumnProps> = ({
                 multiple
                 selection
                 options={gameDropdownOptions}
-                defaultValue={[]}
+                defaultValue={GAMES_DROPDOWN_INITIAL_VALS.map(
+                  (option) => option.value
+                )}
                 // value={gamesChosen}
                 allowAdditions
                 // onChange={(e: React.ChangeEvent) => setGamesChosen(e.target.value)}
+                //TODO: Add control to this Dropdown
               />
             </Form.Field>
+            {/*TODO: Split the above section into its own Segment, potentially its own component and file*/}
             <Form.Field>
-              {encounters.map<ReactNode>((encounter) => {
-                return (
-                  <>
-                    <EncounterTypeTray
-                      index={encounter.index}
-                      type={encounter.type}
-                    />
-                    <Grid columns={2}>
-                      {gamesChosen.map<ReactNode>((chosenGame) => {
-                        return (
-                          <Grid.Column>
-                            <Label
-                              color={
-                                games.find(
-                                  (game) => game.title === chosenGame.text
-                                )?.color as SemanticCOLORS
-                              }
-                            >
-                              {chosenGame.text}
-                            </Label>
-                          </Grid.Column>
-                        )
-                      })}
-                    </Grid>
-                  </>
-                )
-              })}
+              <EncountersForm
+                encounters={encounters}
+                setEncounters={setEncounters}
+                gamesChosen={gamesChosen}
+              />
+              {/*TODO: Move the below two Buttons into EncountersForm */}
               <div
                 style={{
                   display: "flex",
@@ -244,25 +196,21 @@ const LeftColumn: React.FC<LeftColumnProps> = ({
               >
                 <Button
                   onClick={() =>
-                    encounters.length < 4
-                      ? setEncounters(
-                          Array.from(encounters).concat([
-                            { index: encounters.length, type: null },
-                          ])
-                        )
-                      : null
+                    setEncounters(Array.from(encounters).concat([null]))
+                  }
+                  disabled={
+                    encounters.length === NUMBER_OF_ENCOUNTER_TYPES
                   }
                 >
                   Add Encounter
                 </Button>
                 <Button
                   onClick={() =>
-                    encounters.length > 1
-                      ? setEncounters(
-                          encounters.slice(0, encounters.length - 1)
-                        )
-                      : null
+                    setEncounters(
+                      encounters.slice(0, encounters.length - 1)
+                    )
                   }
+                  disabled={encounters.length === 1}
                 >
                   Remove Encounter
                 </Button>
@@ -279,11 +227,15 @@ const LeftColumn: React.FC<LeftColumnProps> = ({
             flexDirection: "row",
           }}
         >
-          <Dropdown placeholder={"Pick your table"} selection />
+          <Dropdown
+            placeholder={"Pick your table"}
+            selection /*TODO: Add control, options, implement cookies*/
+          />
           <Button>Load</Button>
           <Button>Save</Button>
         </div>
         <p>Here are some words</p>
+        {/*TODO: Create some buttons for Examples, where Example 1 is the default template the tool loads with; uses same function as Clear button*/}
       </Segment>
       <Segment id='resources'>
         <Header as='h4'>Resources</Header>
@@ -299,17 +251,17 @@ type RightColumnProps = {
 const RightColumn: React.FC<RightColumnProps> = ({ areaName }) => {
   return (
     <Segment vertical textAlign='center' basic>
-      <Header as='h2'>{`${areaName
-        .toLowerCase()
-        .split(" ")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ")} Encounter Table`}</Header>
-      {/* <pre>{JSON.stringify(gameDropdownOptions, null, 20)}</pre> */}
-
+      <Header as='h2'>
+        {`${areaName
+          .toLowerCase()
+          .split(" ")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ")} Encounter Table`}
+      </Header>
       <Table textAlign='center'>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell colSpan='3'>
+            <Table.HeaderCell colSpan='3' /*TODO: What the child says*/>
               This width of this table header should be determined
               dynamically by the maximum number of pokémon in any of the
               encounters
@@ -318,18 +270,21 @@ const RightColumn: React.FC<RightColumnProps> = ({ areaName }) => {
         </Table.Header>
         <Table.Body>
           <Table.Row>
-            <Table.Cell>Pidgey</Table.Cell>
+            <Table.Cell>Pidgey</Table.Cell>{" "}
+            {/*TODO: Dynamically generate these Cell labels, create data files for all the available Pokémon*/}
             <Table.Cell>Rattata</Table.Cell>
             <Table.Cell>Oddish</Table.Cell>
           </Table.Row>
           <Table.Row>
-            <Table.Cell>50%</Table.Cell>
+            <Table.Cell>50%</Table.Cell>{" "}
+            {/*TODO: Dynamically generate these Cell labels from the EncountersForm and the Percentage/Rarity switch*/}
             <Table.Cell>40%</Table.Cell>
             <Table.Cell>10%</Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.Cell>
-              <Image centered src='FRLGpidgey.png' />
+              <Image centered src='FRLGpidgey.png' />{" "}
+              {/*TODO: Use @pkmn/img package to fetch these images instead of hosting them*/}
             </Table.Cell>
             <Table.Cell>
               <Image centered src='FRLGrattata.png' />
