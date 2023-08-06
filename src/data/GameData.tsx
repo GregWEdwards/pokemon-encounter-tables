@@ -1,15 +1,40 @@
 import { SemanticCOLORS } from "semantic-ui-react"
 
-export type gamesType = {
-  key: string
+const gameKeys = [
+  "re",
+  "bl",
+  "ye",
+  "gr",
+  "go",
+  "si",
+  "cr",
+  "ru",
+  "sa",
+  "em",
+  "fr",
+  "lg",
+  "di",
+  "pe",
+  "pl",
+  "hg",
+  "ss",
+  "bl",
+  "wh",
+  "b2",
+  "w2",
+] as const
+export type GameKeysType = (typeof gameKeys)[number]
+
+export type GameType = {
+  key: GameKeysType
   title: string
   display: string
   color: SemanticCOLORS | "white" | "silver"
   gen: 1 | 2 | 3 | 4 | 5
-  src: string
+  src?: string
 }
 
-const games: gamesType[] = [
+const games: GameType[] = [
   {
     key: "re",
     title: "Red",

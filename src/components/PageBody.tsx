@@ -13,7 +13,7 @@ import {
   Table,
   Image,
 } from "semantic-ui-react"
-import games, { gamesType } from "../data/GameData"
+import games, { GameType } from "../data/GameData"
 import { EncountersForm } from "./EncountersForm"
 
 const GAMES_DROPDOWN_INITIAL_VALS: Array<DropdownMenuItemType> = [
@@ -40,7 +40,7 @@ let NUMBER_OF_ENCOUNTER_TYPES = Object.keys(encounterTypes).length
 export type EncountersType = keyof typeof encounterTypes | null
 
 const gameDropdownOptions: DropdownMenuItemType[] = games.map(
-  (game: gamesType) => {
+  (game: GameType) => {
     return { key: game.key, text: game.title, value: game.display }
   }
 )
