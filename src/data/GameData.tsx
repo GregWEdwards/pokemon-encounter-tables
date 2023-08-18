@@ -1,27 +1,27 @@
 import { SemanticCOLORS } from "semantic-ui-react"
 
 const gameKeys = [
-  "re",
-  "bl",
-  "ye",
-  "gr",
-  "go",
-  "si",
-  "cr",
-  "ru",
-  "sa",
-  "em",
-  "fr",
-  "lg",
-  "di",
-  "pe",
-  "pl",
-  "hg",
-  "ss",
-  "bl",
-  "wh",
-  "b2",
-  "w2",
+  "red",
+  "blue",
+  "yellow",
+  "green",
+  "gold",
+  "silver",
+  "crystal",
+  "ruby",
+  "sapphire",
+  "emerald",
+  "firered",
+  "leafgreen",
+  "diamond",
+  "pearl",
+  "platinum",
+  "heartgold",
+  "soulsilver",
+  "black",
+  "white",
+  "black2",
+  "white2",
 ] as const
 export type GameKeysType = (typeof gameKeys)[number]
 
@@ -34,9 +34,18 @@ export type GameType = {
   src?: string
 }
 
+export const getGameColor = (gameKey: GameKeysType) => {
+  const game = games.find((game) => game.key === gameKey)
+  if (gameKey === "white" || gameKey === "silver") {
+    return undefined
+  } else {
+    return game?.color
+  }
+}
+
 const games: GameType[] = [
   {
-    key: "re",
+    key: "red",
     title: "Red",
     display: "R",
     color: "orange",
@@ -44,7 +53,7 @@ const games: GameType[] = [
     src: "",
   },
   {
-    key: "bl",
+    key: "blue",
     title: "Blue",
     display: "B",
     color: "blue",
@@ -52,7 +61,7 @@ const games: GameType[] = [
     src: "",
   },
   {
-    key: "ye",
+    key: "yellow",
     title: "Yellow",
     display: "Y",
     color: "yellow",
@@ -60,7 +69,7 @@ const games: GameType[] = [
     src: "",
   },
   {
-    key: "gr",
+    key: "green",
     title: "Green",
     display: "G",
     color: "olive",
@@ -68,7 +77,7 @@ const games: GameType[] = [
     src: "",
   },
   {
-    key: "go",
+    key: "gold",
     title: "Gold",
     display: "G",
     color: "yellow",
@@ -76,7 +85,7 @@ const games: GameType[] = [
     src: "",
   },
   {
-    key: "si",
+    key: "silver",
     title: "Silver",
     display: "S",
     color: "grey",
@@ -84,7 +93,7 @@ const games: GameType[] = [
     src: "",
   },
   {
-    key: "cr",
+    key: "crystal",
     title: "Crystal",
     display: "S",
     color: "teal",
@@ -92,7 +101,7 @@ const games: GameType[] = [
     src: "",
   },
   {
-    key: "ru",
+    key: "ruby",
     title: "Ruby",
     display: "R",
     color: "red",
@@ -100,7 +109,7 @@ const games: GameType[] = [
     src: "",
   },
   {
-    key: "sa",
+    key: "sapphire",
     title: "Sapphire",
     display: "S",
     color: "blue",
@@ -108,7 +117,7 @@ const games: GameType[] = [
     src: "",
   },
   {
-    key: "em",
+    key: "emerald",
     title: "Emerald",
     display: "E",
     color: "green",
@@ -116,7 +125,7 @@ const games: GameType[] = [
     src: "",
   },
   {
-    key: "fr",
+    key: "firered",
     title: "FireRed",
     display: "FR",
     color: "orange",
@@ -124,7 +133,7 @@ const games: GameType[] = [
     src: "",
   },
   {
-    key: "lg",
+    key: "leafgreen",
     title: "LeafGreen",
     display: "LG",
     color: "olive",
@@ -132,7 +141,7 @@ const games: GameType[] = [
     src: "",
   },
   {
-    key: "di",
+    key: "diamond",
     title: "Diamond",
     display: "D",
     color: "blue",
@@ -140,7 +149,7 @@ const games: GameType[] = [
     src: "",
   },
   {
-    key: "pe",
+    key: "pearl",
     title: "Pearl",
     display: "P",
     color: "pink",
@@ -148,7 +157,7 @@ const games: GameType[] = [
     src: "",
   },
   {
-    key: "pl",
+    key: "platinum",
     title: "Platinum",
     display: "Pt",
     color: "grey",
@@ -156,7 +165,7 @@ const games: GameType[] = [
     src: "",
   },
   {
-    key: "hg",
+    key: "heartgold",
     title: "HeartGold",
     display: "HG",
     color: "yellow",
@@ -164,7 +173,7 @@ const games: GameType[] = [
     src: "",
   },
   {
-    key: "ss",
+    key: "soulsilver",
     title: "SoulSilver",
     display: "SS",
     color: "silver",
@@ -172,7 +181,7 @@ const games: GameType[] = [
     src: "",
   },
   {
-    key: "bl",
+    key: "black",
     title: "Black",
     display: "B",
     color: "black",
@@ -180,7 +189,7 @@ const games: GameType[] = [
     src: "",
   },
   {
-    key: "wh",
+    key: "white",
     title: "White",
     display: "W",
     color: "white",
@@ -188,7 +197,7 @@ const games: GameType[] = [
     src: "",
   },
   {
-    key: "b2",
+    key: "black2",
     title: "Black 2",
     display: "B2",
     color: "black",
@@ -196,7 +205,7 @@ const games: GameType[] = [
     src: "",
   },
   {
-    key: "w2",
+    key: "white2",
     title: "White 2",
     display: "W2",
     color: "white",

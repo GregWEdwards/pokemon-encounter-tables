@@ -1,6 +1,6 @@
 //use this file to create the full list of Pokemon
 
-type Rarity =
+export type Rarity =
   | "common"
   | "uncommon"
   | "rare"

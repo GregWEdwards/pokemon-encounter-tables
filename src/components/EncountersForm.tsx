@@ -1,28 +1,30 @@
-import React, { ReactNode } from "react"
-import {
-  encounterTypes,
-  EncountersType,
-  DropdownMenuItemType,
-} from "./PageBody"
+import React, { useContext } from "react"
 import { Button, Grid, Label, SemanticCOLORS } from "semantic-ui-react"
-import games from "../data/GameData"
+import {
+  ActionKeys,
+  DispatchActionTypes,
+  TableDataContext,
+  TableDataDispatchContext,
+} from "./DataContext"
+import TableDataType from "../data/TableData"
 
-type EncountersFormType = {
-  encounters: Array<EncountersType>
-  setEncounters: React.Dispatch<
-    React.SetStateAction<Array<EncountersType>>
-  >
-  gamesChosen: Array<DropdownMenuItemType>
+export const encounterTypes = {
+  grass: "Rustling Grass",
+  surf: "Surfing",
+  fish: "Fishing",
+  interact: "Interact",
 }
+let NUMBER_OF_ENCOUNTER_TYPES = Object.keys(encounterTypes).length
+export type EncountersType = keyof typeof encounterTypes | null
 
-export const EncountersForm: React.FC<EncountersFormType> = ({
-  encounters,
-  setEncounters,
-  gamesChosen, //TODO: Remove these props after Context and reducer are implemented, add Context
-}) => {
+export const EncountersForm: React.FC = () => {
+  const tableData: TableDataType = useContext(TableDataContext)
+  const dispatch: React.Dispatch<DispatchActionTypes> = useContext(
+    TableDataDispatchContext
+  )
   return (
     <>
-      {encounters.map((enc, idx) => {
+      {tableData.encounters.map((enc, idx) => {
         return (
           <>
             <div
@@ -37,18 +39,14 @@ export const EncountersForm: React.FC<EncountersFormType> = ({
                 {Object.keys(encounterTypes).map((key) => {
                   return (
                     <Button
-                      active={enc === key}
-                      onClick={() => {
-                        //TODO: Replace with a dispatcher
-                        setEncounters(
-                          encounters
-                            .slice(0, idx)
-                            .concat([key as EncountersType])
-                            .concat(
-                              encounters.slice(idx + 1, encounters.length)
-                            )
-                        )
-                      }}
+                      active={enc.type === key}
+                      onClick={() =>
+                        dispatch({
+                          type: ActionKeys.SET_ENCOUNTER_TYPE,
+                          encType: key as EncountersType,
+                          index: idx,
+                        })
+                      }
                     >
                       {encounterTypes[(key as EncountersType)!]}
                     </Button>
@@ -57,17 +55,11 @@ export const EncountersForm: React.FC<EncountersFormType> = ({
               </Button.Group>
             </div>
             <Grid columns={2}>
-              {gamesChosen.map<ReactNode>((chosenGame) => {
+              {tableData.gamesChosen.map((chosenGame) => {
                 return (
                   <Grid.Column>
-                    <Label
-                      color={
-                        games.find(
-                          (game) => game.title === chosenGame.text
-                        )?.color as SemanticCOLORS
-                      }
-                    >
-                      {chosenGame.text}
+                    <Label color={chosenGame.color as SemanticCOLORS}>
+                      {chosenGame.title}
                     </Label>
                   </Grid.Column>
                 )
@@ -76,6 +68,37 @@ export const EncountersForm: React.FC<EncountersFormType> = ({
           </>
         )
       })}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-around",
+          marginTop: "12px",
+        }}
+      >
+        <Button
+          onClick={() =>
+            dispatch({
+              type: ActionKeys.ADD_ENCOUNTER,
+            })
+          }
+          disabled={
+            tableData.encounters.length === NUMBER_OF_ENCOUNTER_TYPES
+          }
+        >
+          Add Encounter
+        </Button>
+        <Button
+          onClick={() =>
+            dispatch({
+              type: ActionKeys.REMOVE_ENCOUNTER,
+            })
+          }
+          disabled={tableData.encounters.length === 1}
+        >
+          Remove Encounter
+        </Button>
+      </div>
     </>
   )
 }
