@@ -1,8 +1,8 @@
 import React from "react"
-import games, { GameKeysType } from "../data/GameData"
-import { TableDataType, exampleOneData, nullData } from "../data/TableData"
-import { Rarity } from "../data/PokemonData"
-import { EncountersType } from "./EncountersForm"
+import { GameKeys, getGame } from "./GameData"
+import { TableDataType, exampleOneData, nullData } from "./TableData"
+import { Rarity } from "./PokemonData"
+import { EncountersType } from "../components/EncountersForm"
 
 export enum ActionKeys {
   SET_AREANAME,
@@ -23,10 +23,10 @@ export enum ActionKeys {
 type SetAreanameAction = { type: ActionKeys.SET_AREANAME; name: string }
 type SwitchSectionsAction = { type: ActionKeys.SWITCH_SECTIONS }
 type SwitchPercentagesAction = { type: ActionKeys.SWITCH_PERCENTAGES }
-type AddGameAction = { type: ActionKeys.ADD_GAME; gameKey: GameKeysType }
+type AddGameAction = { type: ActionKeys.ADD_GAME; gameKey: GameKeys }
 type RemoveGameAction = {
   type: ActionKeys.REMOVE_GAME
-  gameKey: GameKeysType
+  gameKey: GameKeys
 }
 type AddEncounterAction = { type: ActionKeys.ADD_ENCOUNTER }
 type RemoveEncounterAction = { type: ActionKeys.REMOVE_ENCOUNTER }
@@ -38,21 +38,21 @@ type SetEncounterTypeAction = {
 type SetEncounterPokemonAction = {
   type: ActionKeys.SET_ENCOUNTER_POKEMON
   encType: EncountersType
-  gameKey: GameKeysType
+  gameKey: GameKeys
   index: number
-  id: string | null //TODO: Replace this with type made from names of Pokémon once that data is populated
+  dexNo: number
   percentage: number
   rarity: Rarity
 }
 type AddEncounterPokemonAction = {
   type: ActionKeys.ADD_ENCOUNTER_POKEMON
   encType: EncountersType
-  gameKey: GameKeysType
+  gameKey: GameKeys
 }
 type RemoveEncounterPokemonAction = {
   type: ActionKeys.REMOVE_ENCOUNTER_POKEMON
   encType: EncountersType
-  gameKey: GameKeysType
+  gameKey: GameKeys
   index: number
 }
 type LoadTableDataAction = {
@@ -107,10 +107,7 @@ const tableDataReducer = (
       //Expect 'gameKey' property
       return {
         ...state,
-        gamesChosen: [
-          ...state.gamesChosen,
-          games.find((game) => game.key === action.gameKey)!,
-        ], //TODO: Fix undefined case
+        gamesChosen: [...state.gamesChosen, getGame(action.gameKey)], //TODO: Fix undefined case
         encounters: state.encounters.map((encounter) => {
           return {
             ...encounter,
@@ -178,7 +175,7 @@ const tableDataReducer = (
       }
     }
     case ActionKeys.SET_ENCOUNTER_POKEMON: {
-      //Expect 'encType', 'gameKey', 'index', 'id', 'percentage', 'rarity' properties
+      //Expect 'encType', 'gameKey', 'index', 'dexNo', 'percentage', 'rarity' properties
       return {
         ...state,
         encounters: state.encounters.map((encounter) => {
@@ -195,7 +192,7 @@ const tableDataReducer = (
                           return idx !== action.index
                             ? pok
                             : {
-                                id: action.id,
+                                dexNo: action.dexNo,
                                 percentage: action.percentage,
                                 rarity: action.rarity,
                               }
@@ -222,7 +219,7 @@ const tableDataReducer = (
                         ...datum,
                         pokemon: [
                           ...datum.pokemon,
-                          { id: null, percentage: null, rarity: null },
+                          { dexNo: 0, percentage: null, rarity: null },
                         ],
                       }
                 }),

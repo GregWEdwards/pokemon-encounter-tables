@@ -1,6 +1,6 @@
 import { EncountersType } from "../components/EncountersForm"
-import { GameKeysType, GameType } from "../data/GameData"
-import PokemonType from "./PokemonData"
+import { GameKeys, GameType } from "../data/GameData"
+import PokemonInputType from "./PokemonData"
 
 export type TableDataType = {
   areaName: string
@@ -10,8 +10,8 @@ export type TableDataType = {
   encounters: Array<{
     type: EncountersType
     data: Array<{
-      game: GameKeysType
-      pokemon: Array<PokemonType>
+      game: GameKeys
+      pokemon: Array<PokemonInputType>
     }>
   }>
 }
@@ -35,18 +35,18 @@ export const exampleOneData: TableDataType = {
   percentage: true,
   gamesChosen: [
     {
-      key: "leafgreen",
+      key: GameKeys.LEAFGREEN,
       title: "LeafGreen",
       display: "LG",
-      color: "olive",
+      color: "00DD00",
       gen: 3,
       src: "",
     },
     {
-      key: "firered",
+      key: GameKeys.FIRERED,
       title: "FireRed",
       display: "FR",
-      color: "orange",
+      color: "FF7327",
       gen: 3,
       src: "",
     },
@@ -56,40 +56,40 @@ export const exampleOneData: TableDataType = {
       type: "grass",
       data: [
         {
-          game: "leafgreen",
+          game: GameKeys.LEAFGREEN,
           pokemon: [
             {
-              id: "pidgey",
+              dexNo: 16, //pidgey
               percentage: 50,
               rarity: "common",
             },
             {
-              id: "rattata",
+              dexNo: 19, //rattata
               percentage: 40,
               rarity: "uncommon",
             },
             {
-              id: "oddish",
+              dexNo: 43, //oddish
               percentage: 10,
               rarity: "rare",
             },
           ],
         },
         {
-          game: "firered",
+          game: GameKeys.FIRERED,
           pokemon: [
             {
-              id: "pidgey",
+              dexNo: 16, //pidgey
               percentage: 50,
               rarity: "common",
             },
             {
-              id: "rattata",
+              dexNo: 19, //rattata
               percentage: 40,
               rarity: "uncommon",
             },
             {
-              id: "bellsprout",
+              dexNo: 69, //bellsprout
               percentage: 10,
               rarity: "rare",
             },
@@ -101,40 +101,40 @@ export const exampleOneData: TableDataType = {
       type: "surf",
       data: [
         {
-          game: "leafgreen",
+          game: GameKeys.LEAFGREEN,
           pokemon: [
             {
-              id: "tentacool",
+              dexNo: 72, //tentacool
               percentage: 65,
               rarity: "common",
             },
             {
-              id: "goldeen",
+              dexNo: 118, //goldeen
               percentage: 33,
               rarity: "uncommon",
             },
             {
-              id: "tentacruel",
+              dexNo: 73, //tentacruel
               percentage: 2,
               rarity: "very rare",
             },
           ],
         },
         {
-          game: "firered",
+          game: GameKeys.FIRERED,
           pokemon: [
             {
-              id: "tentacool",
+              dexNo: 72, //tentacool
               percentage: 65,
               rarity: "common",
             },
             {
-              id: "goldeen",
+              dexNo: 118, //goldeen
               percentage: 33,
               rarity: "uncommon",
             },
             {
-              id: "tentacruel",
+              dexNo: 73, //tentacruel
               percentage: 2,
               rarity: "very rare",
             },

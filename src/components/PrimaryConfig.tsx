@@ -12,7 +12,7 @@ import {
   DispatchActionTypes,
   TableDataContext,
   TableDataDispatchContext,
-} from "./DataContext"
+} from "../data/DataContext"
 import EncountersForm from "./EncountersForm"
 import TableDataType from "../data/TableData"
 import { useContext } from "react"
@@ -32,10 +32,9 @@ const gameDropdownOptions: DropdownMenuItemType[] = games.map(
 
 //TODO: Use the below function to robustify the look of the labels in the game selection dropdown
 // const renderDropdownLabel = (menuItem: DropdownItemProps) => ({
-//   color: games.find((game) => (game.title = menuItem.text as string))
-//     ?.color,
+//   color: getGameColor(menuItem.key)
 //   content: menuItem.value,
-//   image: games.find((game) => (game.title = menuItem.text as string))?.src,
+//   image: getGameSrc(menuItem.key)
 // })
 
 const PrimaryConfig: React.FC = () => {

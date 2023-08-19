@@ -1,214 +1,233 @@
-import { SemanticCOLORS } from "semantic-ui-react"
+import { ColorfulLabel } from "../components/PageBody"
 
-const gameKeys = [
-  "red",
-  "blue",
-  "yellow",
-  "green",
-  "gold",
-  "silver",
-  "crystal",
-  "ruby",
-  "sapphire",
-  "emerald",
-  "firered",
-  "leafgreen",
-  "diamond",
-  "pearl",
-  "platinum",
-  "heartgold",
-  "soulsilver",
-  "black",
-  "white",
-  "black2",
-  "white2",
-] as const
-export type GameKeysType = (typeof gameKeys)[number]
-
+export enum GameKeys {
+  RED = "red",
+  BLUE = "blue",
+  YELLOW = "yellow",
+  GREEN = "green",
+  GOLD = "gold",
+  SILVER = "silver",
+  CRYSTAL = "crystal",
+  RUBY = "ruby",
+  SAPPHIRE = "sapphire",
+  EMERALD = "emerald",
+  FIRERED = "firered",
+  LEAFGREEN = "leafgreen",
+  DIAMOND = "diamond",
+  PEARL = "pearl",
+  PLATINUM = "platinum",
+  HEARTGOLD = "heartgold",
+  SOULSILVER = "soulsilver",
+  BLACK = "black",
+  WHITE = "white",
+  BLACK2 = "black2",
+  WHITE2 = "white2",
+}
+export type PossibleGensType = 1 | 2 | 3 | 4 | 5
 export type GameType = {
-  key: GameKeysType
+  key: GameKeys
   title: string
   display: string
-  color: SemanticCOLORS | "white" | "silver"
-  gen: 1 | 2 | 3 | 4 | 5
+  color: string
+  gen: PossibleGensType
   src?: string
 }
 
-export const getGameColor = (gameKey: GameKeysType) => {
-  const game = games.find((game) => game.key === gameKey)
-  if (gameKey === "white" || gameKey === "silver") {
-    return undefined
-  } else {
-    return game?.color
-  }
+export const getGame = (gameKey: GameKeys): GameType => {
+  return games.find((game) => game.key === gameKey) as GameType //the find should succeed
+}
+export const getGameTitle = (gameKey: GameKeys): string => {
+  return getGame(gameKey).title
+}
+export const getGameDisplay = (gameKey: GameKeys): string => {
+  return getGame(gameKey).display
+}
+export const getGameColor = (gameKey: GameKeys): string => {
+  return getGame(gameKey).color
+}
+export const getGameGen = (gameKey: GameKeys): PossibleGensType => {
+  return getGame(gameKey).gen
+}
+export const getGameSrc = (gameKey: GameKeys): string | undefined => {
+  return getGame(gameKey).src
+}
+
+export const GameLabel: React.FC<{ gameKey: GameKeys }> = ({
+  gameKey,
+}) => {
+  return (
+    <ColorfulLabel $stripped $color={getGameColor(gameKey)}>
+      {getGameTitle(gameKey)}
+    </ColorfulLabel>
+  )
 }
 
 const games: GameType[] = [
   {
-    key: "red",
+    key: GameKeys.RED,
     title: "Red",
     display: "R",
-    color: "orange",
+    color: "FF1111",
     gen: 1,
     src: "",
   },
   {
-    key: "blue",
+    key: GameKeys.BLUE,
     title: "Blue",
     display: "B",
-    color: "blue",
+    color: "1111FF",
     gen: 1,
     src: "",
   },
   {
-    key: "yellow",
+    key: GameKeys.YELLOW,
     title: "Yellow",
     display: "Y",
-    color: "yellow",
+    color: "FFD733",
     gen: 1,
     src: "",
   },
   {
-    key: "green",
+    key: GameKeys.GREEN,
     title: "Green",
     display: "G",
-    color: "olive",
+    color: "11BB11",
     gen: 1,
     src: "",
   },
   {
-    key: "gold",
+    key: GameKeys.GOLD,
     title: "Gold",
     display: "G",
-    color: "yellow",
+    color: "DAA520",
     gen: 2,
     src: "",
   },
   {
-    key: "silver",
+    key: GameKeys.SILVER,
     title: "Silver",
     display: "S",
-    color: "grey",
+    color: "C0C0C0",
     gen: 2,
     src: "",
   },
   {
-    key: "crystal",
+    key: GameKeys.CRYSTAL,
     title: "Crystal",
     display: "S",
-    color: "teal",
+    color: "4FD9FF",
     gen: 2,
     src: "",
   },
   {
-    key: "ruby",
+    key: GameKeys.RUBY,
     title: "Ruby",
     display: "R",
-    color: "red",
+    color: "A00000",
     gen: 3,
     src: "",
   },
   {
-    key: "sapphire",
+    key: GameKeys.SAPPHIRE,
     title: "Sapphire",
     display: "S",
-    color: "blue",
+    color: "0000A0",
     gen: 3,
     src: "",
   },
   {
-    key: "emerald",
+    key: GameKeys.EMERALD,
     title: "Emerald",
     display: "E",
-    color: "green",
+    color: "00A000",
     gen: 3,
     src: "",
   },
   {
-    key: "firered",
+    key: GameKeys.FIRERED,
     title: "FireRed",
     display: "FR",
-    color: "orange",
+    color: "FF7327",
     gen: 3,
     src: "",
   },
   {
-    key: "leafgreen",
+    key: GameKeys.LEAFGREEN,
     title: "LeafGreen",
     display: "LG",
-    color: "olive",
+    color: "00DD00",
     gen: 3,
     src: "",
   },
   {
-    key: "diamond",
+    key: GameKeys.DIAMOND,
     title: "Diamond",
     display: "D",
-    color: "blue",
+    color: "AAAAFF",
     gen: 4,
     src: "",
   },
   {
-    key: "pearl",
+    key: GameKeys.PEARL,
     title: "Pearl",
     display: "P",
-    color: "pink",
+    color: "FFAAAA",
     gen: 4,
     src: "",
   },
   {
-    key: "platinum",
+    key: GameKeys.PLATINUM,
     title: "Platinum",
     display: "Pt",
-    color: "grey",
+    color: "999999",
     gen: 4,
     src: "",
   },
   {
-    key: "heartgold",
+    key: GameKeys.HEARTGOLD,
     title: "HeartGold",
     display: "HG",
-    color: "yellow",
+    color: "B69E00",
     gen: 4,
     src: "",
   },
   {
-    key: "soulsilver",
+    key: GameKeys.SOULSILVER,
     title: "SoulSilver",
     display: "SS",
-    color: "silver",
+    color: "C0C0E1",
     gen: 4,
     src: "",
   },
   {
-    key: "black",
+    key: GameKeys.BLACK,
     title: "Black",
     display: "B",
-    color: "black",
+    color: "444444",
     gen: 5,
     src: "",
   },
   {
-    key: "white",
+    key: GameKeys.WHITE,
     title: "White",
     display: "W",
-    color: "white",
+    color: "E1E1E1",
     gen: 5,
     src: "",
   },
   {
-    key: "black2",
+    key: GameKeys.BLACK2,
     title: "Black 2",
     display: "B2",
-    color: "black",
+    color: "424B50",
     gen: 5,
     src: "",
   },
   {
-    key: "white2",
+    key: GameKeys.WHITE2,
     title: "White 2",
     display: "W2",
-    color: "white",
+    color: "E3CED0",
     gen: 5,
     src: "",
   },

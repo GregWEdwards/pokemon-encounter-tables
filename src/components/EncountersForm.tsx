@@ -1,12 +1,13 @@
 import React, { useContext } from "react"
-import { Button, Grid, Label, SemanticCOLORS } from "semantic-ui-react"
+import { Button, Grid } from "semantic-ui-react"
 import {
   ActionKeys,
   DispatchActionTypes,
   TableDataContext,
   TableDataDispatchContext,
-} from "./DataContext"
+} from "../data/DataContext"
 import TableDataType from "../data/TableData"
+import { GameLabel } from "../data/GameData"
 
 export const encounterTypes = {
   grass: "Rustling Grass",
@@ -58,9 +59,7 @@ export const EncountersForm: React.FC = () => {
               {tableData.gamesChosen.map((chosenGame) => {
                 return (
                   <Grid.Column>
-                    <Label color={chosenGame.color as SemanticCOLORS}>
-                      {chosenGame.title}
-                    </Label>
+                    <GameLabel gameKey={chosenGame.key} />
                   </Grid.Column>
                 )
               })}
