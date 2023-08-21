@@ -57,7 +57,9 @@ type RemoveEncounterPokemonAction = {
 }
 type LoadTableDataAction = {
   type: ActionKeys.LOAD_TABLE_DATA
-  dataKey: "nullData" | "exampleOneData" //TODO: Move or change this specificity elsewhere once cookies are implemented
+  dataKey:
+    | "nullData"
+    | "exampleOneData" /*TODO: Move or change this specificity elsewhere once cookies are implemented*/
 }
 // type SaveTableDataAction = { type: ActionKeys.SAVE_TABLE_DATA,  }
 
@@ -107,7 +109,10 @@ const tableDataReducer = (
       //Expect 'gameKey' property
       return {
         ...state,
-        gamesChosen: [...state.gamesChosen, getGame(action.gameKey)], //TODO: Fix undefined case
+        gamesChosen: [
+          ...state.gamesChosen,
+          getGame(action.gameKey),
+        ] /*TODO: Fix undefined case*/,
         encounters: state.encounters.map((encounter) => {
           return {
             ...encounter,

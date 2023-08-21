@@ -33,7 +33,7 @@ export const EncountersForm: React.FC = () => {
                 display: "flex",
                 flexDirection: "row",
                 marginBottom: "12px",
-              }} //TODO: Apply these styles properly
+              }} /*TODO: Apply these styles properly*/
             >
               <p style={{ marginRight: "12px" }}>Encounter Type</p>
               <Button.Group size='tiny'>

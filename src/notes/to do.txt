@@ -1,0 +1,51 @@
+This file contains the output from running toDoListGenerator.js. It serves as a living document
+which keeps track of all the TODOs still left in the application's source code. To be documented,
+the TODOs MUST be formatted as "/*TODO: ... */" in the source code.
+
+
+***************Mon Aug 21 2023 18:14:17 GMT-0400 (Eastern Daylight Time)***************
+
+
+File: EncountersForm.tsx
+
+TODO: /*TODO: Apply these styles properly*/
+
+
+File: EncounterTable.tsx
+
+TODO: /*TODO: Dynamically generate these Cell labels, create data files for all the available Pokémon*/
+TODO: /*TODO: Use @pkmn/img package to fetch these images instead of hosting them*/
+TODO: /*TODO: Dynamically generate these Cell labels from the EncountersForm and the Percentage/Rarity switch*/
+TODO: /*TODO: Dynamically generate these Cell labels, create data files for all the available Pokémon*/
+TODO: /*TODO: Use @pkmn/img package to fetch these images instead of hosting them*/
+TODO: /*TODO: Dynamically generate these Cell labels from the EncountersForm and the Percentage/Rarity switch*/
+
+
+File: LoadSave.tsx
+
+TODO: /*TODO: Add control, options, implement cookies*/
+TODO: /*TODO: Create some buttons for Examples, where Example 1 is the default template the tool loads with; uses same function as Clear button*/
+
+
+File: PrimaryConfig.tsx
+
+TODO: /*TODO: This className isn't doing anything currently*/
+TODO: /*TODO: Devise a way to batch the calls to setAreaName so that the table's header doesn't change until the user is done typing*/
+TODO: /*TODO: Implement Sections, hook up this form to the table*/
+TODO: /*TODO: Add Clear button, function to bring up 'Are you sure?' Modal, and data-wipe function for the 'Yes, clear' button on the Modal*/
+TODO: /*TODO: Get the Label and the Dropdown on the same line*/
+TODO: /*TODO: Add control to this Dropdown*/
+TODO: /*TODO: Split the above section into its own Segment, potentially its own component and file*/
+
+
+File: DataContext.tsx
+
+TODO: /*TODO: Move or change this specificity elsewhere once cookies are implemented*/
+TODO: /*TODO: Fix undefined case*/
+
+
+File: PokemonData.tsx
+
+TODO: /*TODO: Add src link*/
+TODO: /*TODO: Add more get methods*/
+

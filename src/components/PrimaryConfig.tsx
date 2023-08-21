@@ -30,12 +30,12 @@ const gameDropdownOptions: DropdownMenuItemType[] = games.map(
   }
 )
 
-//TODO: Use the below function to robustify the look of the labels in the game selection dropdown
-// const renderDropdownLabel = (menuItem: DropdownItemProps) => ({
-//   color: getGameColor(menuItem.key)
-//   content: menuItem.value,
-//   image: getGameSrc(menuItem.key)
-// })
+/*TODO: Use the below function to robustify the look of the labels in the game selection dropdown
+ const renderDropdownLabel = (menuItem: DropdownItemProps) => ({
+   color: getGameColor(menuItem.key)
+   content: menuItem.value,
+   image: getGameSrc(menuItem.key)
+ })*/
 
 const PrimaryConfig: React.FC = () => {
   const tableData: TableDataType = useContext(TableDataContext)
@@ -123,7 +123,7 @@ const PrimaryConfig: React.FC = () => {
               //   type: ActionKeys.ADD_GAME,
               //   gameKey: e.target.value
               // })}
-              //TODO: Add control to this Dropdown
+              /*TODO: Add control to this Dropdown*/
             />
           </Form.Field>
           {/*TODO: Split the above section into its own Segment, potentially its own component and file*/}
