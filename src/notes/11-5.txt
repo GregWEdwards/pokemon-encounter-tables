@@ -1,0 +1,13 @@
+add grass & surf photos to public folder
+remove example table, hook up table to represent data dynamically (set up data retrieval so that this can just work once all the pokemon's data has been populated)
+added two CSS classes for the EncountersForm
+changed encounterTypes object to EncounterTypes enum and used it to create the EncounterTypesInfo object, moving information about the encounter types out from other files and into the EncountersForm.tsx file
+Added number buttons (encounter-number class name), but need to add reordering functionality
+Changed Encounter Type buttons to an icon button group, but may need to change this again as more encounter types are added
+Reordered buttons in PrimaryConfig.tsx, added a Clear button, and hooked up a Modal for the nullData load action.
+Changed Rarity from a union type to an enum
+Attempt to implement local state & callback hook solution for indicating to users that multiple encounters of the same type are present in EncountersForm.tsx (and TableData.tsx) COMMENTED OUT FOR NOW
+Started adding the REORDER_ENCOUNTER action in DataContext.tsx COMMENTED OUT FOR NOW
+
+Revamped EncounterTable, PrimaryConfig, and EncountersForm
+Added grass & surf photos to public folder; removed example table, hooked up table to represent data dynamically (set up data retrieval so that this can just work once all the pokemon's data has been populated); added two CSS classes for the EncountersForm; changed encounterTypes object to EncounterTypes enum and used it to create the EncounterTypesInfo object, moving information about the encounter types out from other files and into the EncountersForm.tsx file; added number buttons (encounter-number class name), but need to add reordering functionality; changed Encounter Type buttons to an icon button group, but may need to change this again as more encounter types are added; reordered buttons in PrimaryConfig.tsx, added a Clear button, and hooked up a Modal for the nullData load action; changed Rarity from a union type to an enum; attempt to implement local state & callback hook solution for indicating to users that multiple encounters of the same type are present in EncountersForm.tsx (and TableData.tsx) COMMENTED OUT FOR NOW; started adding the REORDER_ENCOUNTER action in DataContext.tsx COMMENTED OUT FOR NOW

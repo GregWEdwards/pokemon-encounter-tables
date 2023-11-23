@@ -1,0 +1,1 @@
+I can keep the current data format, I just need to add a functional testing conditional to the Popup content, Popup style, and Button className (also add the class to the style sheet)

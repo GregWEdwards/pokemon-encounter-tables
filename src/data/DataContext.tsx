@@ -2,7 +2,7 @@ import React from "react"
 import { GameKeys, getGame } from "./GameData"
 import { TableDataType, exampleOneData, nullData } from "./TableData"
 import { Rarity } from "./PokemonData"
-import { EncountersType } from "../components/EncountersForm"
+import { EncounterTypes } from "../components/EncountersForm"
 
 export enum ActionKeys {
   SET_AREANAME,
@@ -32,12 +32,12 @@ type AddEncounterAction = { type: ActionKeys.ADD_ENCOUNTER }
 type RemoveEncounterAction = { type: ActionKeys.REMOVE_ENCOUNTER }
 type SetEncounterTypeAction = {
   type: ActionKeys.SET_ENCOUNTER_TYPE
-  encType: EncountersType
+  encType: EncounterTypes
   index: number
 }
 type SetEncounterPokemonAction = {
   type: ActionKeys.SET_ENCOUNTER_POKEMON
-  encType: EncountersType
+  encType: EncounterTypes
   gameKey: GameKeys
   index: number
   dexNo: number
@@ -46,12 +46,12 @@ type SetEncounterPokemonAction = {
 }
 type AddEncounterPokemonAction = {
   type: ActionKeys.ADD_ENCOUNTER_POKEMON
-  encType: EncountersType
+  encType: EncounterTypes
   gameKey: GameKeys
 }
 type RemoveEncounterPokemonAction = {
   type: ActionKeys.REMOVE_ENCOUNTER_POKEMON
-  encType: EncountersType
+  encType: EncounterTypes
   gameKey: GameKeys
   index: number
 }
@@ -160,7 +160,7 @@ const tableDataReducer = (
       return {
         ...state,
         encounters: state.encounters.concat({
-          type: null,
+          type: EncounterTypes.NONE,
           data: [
             ...state.gamesChosen.map((game) => {
               return {
@@ -271,6 +271,17 @@ const tableDataReducer = (
           throw Error("Could not load " + action.dataKey)
       }
     }
+    /*case ActionKeys.REORDER_ENCOUNTER: {
+      //Expect 'encIdx', 'targetIdx'
+      let encs = Array.state.encounters
+      const reorderEnc = encs[action.encIdx]
+      encs = encs.splice(action.encIdx, 1)
+      if (action.targetIdx >= action.encIdx) {
+        encs.splice(action.targetIdx + 1, 0, reorderEnc)
+      } else {
+        encs.splice(action.targetIdx, 0, reorderEnc)
+      }
+    }*/
     //case "SAVE_TABLE_DATA"
     // default: {
     //   throw Error("Unknown action: " + action.type)

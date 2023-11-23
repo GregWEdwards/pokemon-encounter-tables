@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { ColorfulLabel } from "../components/PageBody"
 import { PossibleGensType } from "./GameData"
-import { Icon, Image } from "semantic-ui-react"
+import { Image } from "semantic-ui-react"
 
 enum PokemonTypes {
   NONE = "???",
@@ -134,13 +134,14 @@ export const PokemonTypeLabel: React.FC<{ type: PokemonTypes }> = ({
   )
 }
 
-export type Rarity =
-  | "common"
-  | "uncommon"
-  | "rare"
-  | "very rare"
-  | "legendary"
-  | "mythical"
+export enum Rarity {
+  COMMON = "Common",
+  UNCOMMON = "Uncommon",
+  RARE = "Rare",
+  VERYRARE = "Very Rare",
+  LEGENDARY = "Legendary",
+  MYTHICAL = "Mythical",
+}
 
 type PokemonInputType = {
   dexNo: number //if meant to be empty, dexNo will be 0
@@ -151,7 +152,7 @@ type PokemonInputType = {
 type PokemonType = {
   id: string
   src: string
-  priType: PokemonTypes | null
+  priType: PokemonTypes
   secType?: PokemonTypes
   gen: 0 | PossibleGensType
 }

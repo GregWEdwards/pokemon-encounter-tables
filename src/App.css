@@ -63,6 +63,23 @@
   justify-content: space-around;
 }
 
+button.encounter-number {
+  margin: 0px 10px 0px 0px;
+  width: 30px;
+  height: 30px;
+  background-color: rgb(240, 236, 223);
+  border: 1px solid lightgray;
+}
+
+label.form-label {
+  display: block;
+  margin: 0 0 0.28571429rem 0;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 0.92857143em;
+  font-weight: 700;
+  text-transform: none;
+}
+
 /* .primary-config {
   input[type="checkbox"] {
     padding-left: "8px";

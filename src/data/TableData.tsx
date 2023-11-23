@@ -1,6 +1,6 @@
-import { EncountersType } from "../components/EncountersForm"
+import { EncounterTypes } from "../components/EncountersForm"
 import { GameKeys, GameType } from "../data/GameData"
-import PokemonInputType from "./PokemonData"
+import PokemonInputType, { Rarity } from "./PokemonData"
 
 export type TableDataType = {
   areaName: string
@@ -8,13 +8,42 @@ export type TableDataType = {
   percentage: boolean //if false, use rarity
   gamesChosen: Array<GameType> //use games' keys
   encounters: Array<{
-    type: EncountersType
+    type: EncounterTypes
     data: Array<{
       game: GameKeys
       pokemon: Array<PokemonInputType>
     }>
   }>
 }
+
+/*
+export const detectSameTypes = (
+  tableData: TableDataType
+): Array<{ type: EncounterTypes; idxs: Array<number> }> | undefined => {
+  if (
+    tableData.encounters.length === 0 ||
+    !tableData.encounters.find((enc) => enc.type !== EncounterTypes.NONE)
+  ) {
+    return undefined
+  }
+  let arr = new Array<{ type: EncounterTypes; idxs: Array<number> }>()
+  for (const enc of tableData.encounters) {
+    const idx = arr.findIndex((v) => v.type === enc.type)
+    if (idx > -1) {
+      arr[idx].idxs.push(idx)
+    } else {
+      arr.push({ type: enc.type, idxs: [idx] })
+    }
+  }
+  return arr.filter(
+    (obj) => obj.type !== EncounterTypes.NONE && obj.idxs.length > 1
+  )
+}
+
+export const reorderEncounter = (
+  tableData: TableDataType
+)
+*/
 
 export const nullData: TableDataType = {
   areaName: "",
@@ -23,7 +52,7 @@ export const nullData: TableDataType = {
   gamesChosen: [],
   encounters: [
     {
-      type: null,
+      type: EncounterTypes.NONE,
       data: [],
     },
   ],
@@ -53,7 +82,7 @@ export const exampleOneData: TableDataType = {
   ],
   encounters: [
     {
-      type: "grass",
+      type: EncounterTypes.GRASS,
       data: [
         {
           game: GameKeys.LEAFGREEN,
@@ -61,17 +90,17 @@ export const exampleOneData: TableDataType = {
             {
               dexNo: 16, //pidgey
               percentage: 50,
-              rarity: "common",
+              rarity: Rarity.COMMON,
             },
             {
               dexNo: 19, //rattata
               percentage: 40,
-              rarity: "uncommon",
+              rarity: Rarity.UNCOMMON,
             },
             {
               dexNo: 43, //oddish
               percentage: 10,
-              rarity: "rare",
+              rarity: Rarity.RARE,
             },
           ],
         },
@@ -81,24 +110,24 @@ export const exampleOneData: TableDataType = {
             {
               dexNo: 16, //pidgey
               percentage: 50,
-              rarity: "common",
+              rarity: Rarity.COMMON,
             },
             {
               dexNo: 19, //rattata
               percentage: 40,
-              rarity: "uncommon",
+              rarity: Rarity.UNCOMMON,
             },
             {
               dexNo: 69, //bellsprout
               percentage: 10,
-              rarity: "rare",
+              rarity: Rarity.RARE,
             },
           ],
         },
       ],
     },
     {
-      type: "surf",
+      type: EncounterTypes.SURF,
       data: [
         {
           game: GameKeys.LEAFGREEN,
@@ -106,17 +135,17 @@ export const exampleOneData: TableDataType = {
             {
               dexNo: 72, //tentacool
               percentage: 65,
-              rarity: "common",
+              rarity: Rarity.COMMON,
             },
             {
               dexNo: 118, //goldeen
               percentage: 33,
-              rarity: "uncommon",
+              rarity: Rarity.UNCOMMON,
             },
             {
               dexNo: 73, //tentacruel
               percentage: 2,
-              rarity: "very rare",
+              rarity: Rarity.VERYRARE,
             },
           ],
         },
@@ -126,17 +155,17 @@ export const exampleOneData: TableDataType = {
             {
               dexNo: 72, //tentacool
               percentage: 65,
-              rarity: "common",
+              rarity: Rarity.COMMON,
             },
             {
               dexNo: 118, //goldeen
               percentage: 33,
-              rarity: "uncommon",
+              rarity: Rarity.UNCOMMON,
             },
             {
               dexNo: 73, //tentacruel
               percentage: 2,
-              rarity: "very rare",
+              rarity: Rarity.VERYRARE,
             },
           ],
         },

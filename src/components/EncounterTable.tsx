@@ -2,8 +2,8 @@ import { useContext } from "react"
 import TableDataType from "../data/TableData"
 import { TableDataContext } from "../data/DataContext"
 import { Header, Segment, Table, Image } from "semantic-ui-react"
-import { EncountersType } from "./EncountersForm"
-import { GameKeys, getGameTitle } from "../data/GameData"
+import { EncounterTypes, EncounterTypesInfo } from "./EncountersForm"
+import { GameKeys, getGameColor, getGameTitle } from "../data/GameData"
 import PokemonInputType, {
   PokemonTypeLabel,
   getPokemon,
@@ -21,129 +21,54 @@ const EncounterTable: React.FC = () => {
           .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
           .join(" ")} Encounter Table`}
       </Header>
-      <Table textAlign='center' celled={false} compact>
-        <>
-          {tableData.encounters.map((encounter) => {
-            return (
-              <>
-                <Table.Header>
-                  <EncounterTypeHeaderRow
-                    encType={encounter.type}
-                    rows={3}
-                  />
-                </Table.Header>
-                <Table.Body>
-                  {encounter.data.map((datum) => {
-                    return (
-                      <>
-                        <GameBannerBodyRow
-                          gameKey={datum.game}
-                          rows={datum.pokemon.length}
-                        />
-                        <PokemonBodyRows
-                          pokemon={datum.pokemon}
-                          percentage={tableData.percentage}
-                        />
-                      </>
-                    )
-                  })}
-                </Table.Body>
-              </>
-            )
-          })}
-        </>
-      </Table>
-
-      <Table textAlign='center' id='exampleTable'>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell colSpan={3}>
-              {"Example Table"}
-            </Table.HeaderCell>
-          </Table.Row>
-          <Table.Row>
-            <Table.HeaderCell colSpan={3}>{"GRASS"}</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          <Table.Row>
-            <Table.HeaderCell textAlign='left' colSpan={3}>
-              {"LeafGreen"}
-            </Table.HeaderCell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Pidgey</Table.Cell>{" "}
-            {/*TODO: Dynamically generate these Cell labels, create data files for all the available Pokémon*/}
-            <Table.Cell>Rattata</Table.Cell>
-            <Table.Cell>Oddish</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>
-              <Image centered src='FRLGpidgey.png' />{" "}
-              {/*TODO: Use @pkmn/img package to fetch these images instead of hosting them*/}
-            </Table.Cell>
-            <Table.Cell>
-              <Image centered src='FRLGrattata.png' />
-            </Table.Cell>
-            <Table.Cell>
-              <Image centered src='FRLGoddish.png' />
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>
-              {tableData.percentage ? "50%" : "common"}
-            </Table.Cell>{" "}
-            {/*TODO: Dynamically generate these Cell labels from the EncountersForm and the Percentage/Rarity switch*/}
-            <Table.Cell>
-              {tableData.percentage ? "40%" : "uncommon"}
-            </Table.Cell>
-            <Table.Cell>
-              {tableData.percentage ? "10%" : "rare"}
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.HeaderCell textAlign='left' colSpan={3}>
-              {"FireRed"}
-            </Table.HeaderCell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>Pidgey</Table.Cell>{" "}
-            {/*TODO: Dynamically generate these Cell labels, create data files for all the available Pokémon*/}
-            <Table.Cell>Rattata</Table.Cell>
-            <Table.Cell>Bellsprout</Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>
-              <Image centered src='FRLGpidgey.png' />{" "}
-              {/*TODO: Use @pkmn/img package to fetch these images instead of hosting them*/}
-            </Table.Cell>
-            <Table.Cell>
-              <Image centered src='FRLGrattata.png' />
-            </Table.Cell>
-            <Table.Cell>
-              <Image centered src='FRLGbellsprout.png' />
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell>
-              {tableData.percentage ? "50%" : "common"}
-            </Table.Cell>{" "}
-            {/*TODO: Dynamically generate these Cell labels from the EncountersForm and the Percentage/Rarity switch*/}
-            <Table.Cell>
-              {tableData.percentage ? "40%" : "uncommon"}
-            </Table.Cell>
-            <Table.Cell>
-              {tableData.percentage ? "10%" : "rare"}
-            </Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
+      <>
+        {tableData.encounters.map((encounter, idx) => {
+          return (
+            <Table
+              textAlign='center'
+              attached={
+                idx === 0
+                  ? "top"
+                  : idx === tableData.encounters.length - 1
+                  ? "bottom"
+                  : true
+              }
+              celled={false}
+              compact
+              color={EncounterTypesInfo[encounter.type].bgColor}
+            >
+              <Table.Header>
+                <EncounterTypeHeaderRow
+                  encType={encounter.type}
+                  rows={3}
+                />
+              </Table.Header>
+              <Table.Body>
+                {encounter.data.map((datum) => {
+                  return (
+                    <>
+                      <GameBannerBodyRow
+                        gameKey={datum.game}
+                        rows={datum.pokemon.length}
+                      />
+                      <PokemonBodyRows
+                        pokemon={datum.pokemon}
+                        percentage={tableData.percentage}
+                      />
+                    </>
+                  )
+                })}
+              </Table.Body>
+            </Table>
+          )
+        })}
+      </>
     </Segment>
   )
 }
 
 type EncounterTypeHeaderRowProps = {
-  encType: EncountersType
+  encType: EncounterTypes
   rows: number
 }
 
@@ -151,29 +76,30 @@ const EncounterTypeHeaderRow: React.FC<EncounterTypeHeaderRowProps> = ({
   encType,
   rows,
 }) => {
-  let headerCell = null
-  switch (encType) {
-    case null:
-      headerCell = <Table.HeaderCell colSpan={rows}>NULL</Table.HeaderCell>
-      break
-    case "grass":
-      headerCell = (
-        <Table.HeaderCell colSpan={rows}>GRASS</Table.HeaderCell>
-      )
-      break
-    case "surf":
-      headerCell = <Table.HeaderCell colSpan={rows}>SURF</Table.HeaderCell>
-      break
-    case "fish":
-      headerCell = <Table.HeaderCell colSpan={rows}>FISH</Table.HeaderCell>
-      break
-    case "interact":
-      headerCell = (
-        <Table.HeaderCell colSpan={rows}>INTERACT</Table.HeaderCell>
-      )
-      break
-  }
-  return <Table.Row>{headerCell}</Table.Row>
+  return (
+    <Table.Row color={EncounterTypesInfo[encType].bgColor}>
+      {/*TODO: This color property isn't really coloring the background, see GameBannerBodyRow for a good example*/}
+      <Table.HeaderCell colSpan={rows}>
+        {EncounterTypesInfo[encType].src && (
+          <Image
+            height='24px'
+            width='24px'
+            spaced='right'
+            src={EncounterTypesInfo[encType].src}
+          />
+        )}
+        {encType}
+        {EncounterTypesInfo[encType].src && (
+          <Image
+            height='24px'
+            width='24px'
+            spaced='left'
+            src={EncounterTypesInfo[encType].src}
+          />
+        )}
+      </Table.HeaderCell>
+    </Table.Row>
+  )
 }
 
 type GameBannerBodyRowProps = {
@@ -187,7 +113,14 @@ const GameBannerBodyRow: React.FC<GameBannerBodyRowProps> = ({
 }) => {
   return (
     <Table.Row>
-      <Table.HeaderCell textAlign='left' colSpan={rows}>
+      <Table.HeaderCell
+        style={{
+          borderRadius: "3px",
+          backgroundColor: `#${getGameColor(gameKey)}`,
+        }}
+        textAlign='left'
+        colSpan={rows}
+      >
         {getGameTitle(gameKey)}
       </Table.HeaderCell>
     </Table.Row>
@@ -210,6 +143,7 @@ const PokemonBodyRows: React.FC<PokemonBodyRowsType> = ({
           return (
             <Table.Cell>
               <Image centered src={getPokemon(pokemon.dexNo).src} />
+              {/*TODO: Use @pkmn/img package to fetch these images instead of hosting them*/}
             </Table.Cell>
           )
         })}

@@ -59,7 +59,8 @@ for (const fileKey of Object.keys(writeFileContents)) {
   })
   stringToAppend += todoListStr
 }
-stringToAppend += "\n\n"
+stringToAppend +=
+  "\n\n***************************************************************************************\n"
 fs.appendFileSync(
   "C:/Users/bojan/Desktop/Dev Tools/React/pokemon-encounters/src/notes/to do.txt",
   stringToAppend

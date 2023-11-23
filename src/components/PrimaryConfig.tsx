@@ -1,9 +1,12 @@
 import {
+  Button,
   Checkbox,
   Dropdown,
   Form,
+  Icon,
   Input,
   Label,
+  Modal,
   Radio,
   Segment,
 } from "semantic-ui-react"
@@ -15,7 +18,7 @@ import {
 } from "../data/DataContext"
 import EncountersForm from "./EncountersForm"
 import TableDataType from "../data/TableData"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import games, { GameType } from "../data/GameData"
 
 export type DropdownMenuItemType = {
@@ -38,6 +41,7 @@ const gameDropdownOptions: DropdownMenuItemType[] = games.map(
  })*/
 
 const PrimaryConfig: React.FC = () => {
+  const [modalOpen, setModalOpen] = useState<boolean>(false)
   const tableData: TableDataType = useContext(TableDataContext)
   const dispatch: React.Dispatch<DispatchActionTypes> = useContext(
     TableDataDispatchContext
@@ -64,6 +68,69 @@ const PrimaryConfig: React.FC = () => {
               /*TODO: Devise a way to batch the calls to setAreaName so that the table's header doesn't change until the user is done typing*/
             />
           </Form.Field>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Form.Field control={Button.Group}>
+              <Button
+                toggle
+                active={tableData.percentage}
+                onClick={() =>
+                  dispatch({
+                    type: ActionKeys.SWITCH_PERCENTAGES,
+                  })
+                }
+              >
+                {"Percentages"}
+              </Button>
+              <Button.Or />
+              <Button
+                toggle
+                active={!tableData.percentage}
+                onClick={() =>
+                  dispatch({
+                    type: ActionKeys.SWITCH_PERCENTAGES,
+                  })
+                }
+              >
+                {"Rarity"}
+              </Button>
+            </Form.Field>
+            <Form.Field>
+              <Button negative icon onClick={() => setModalOpen(true)}>
+                Clear
+                <Icon name='cancel' />
+              </Button>
+              <Modal closeIcon dimmer='blurring' open={modalOpen}>
+                {/* TODO: Close button in upper corner of Modal isn't working */}
+                <Modal.Header>Are you sure?</Modal.Header>
+                <Modal.Content>
+                  {
+                    "If you continue, all the current data you have saved in this document will be lost and replaced.\nIf you do not wish to lose that data, click Back and save your data first using the Load/Save form."
+                  }
+                </Modal.Content>
+                <Modal.Actions>
+                  <Button onClick={() => setModalOpen(false)}>Back</Button>
+                  <Button
+                    negative
+                    onClick={() => {
+                      setModalOpen(false)
+                      dispatch({
+                        type: ActionKeys.LOAD_TABLE_DATA,
+                        dataKey: "nullData",
+                      })
+                    }}
+                  >
+                    Yes, clear it <Icon name='cancel' />
+                  </Button>
+                </Modal.Actions>
+              </Modal>
+            </Form.Field>
+          </div>
           <Form.Field>
             <Label basic size='large'>
               Sections?
@@ -72,45 +139,13 @@ const PrimaryConfig: React.FC = () => {
               style={{ paddingLeft: "8px", verticalAlign: "sub" }}
               /*TODO: Implement Sections, hook up this form to the table*/
             />
-            {/*TODO: Add Clear button, function to bring up 'Are you sure?' Modal, and data-wipe function for the 'Yes, clear' button on the Modal*/}
-          </Form.Field>
-          <Form.Field
-            style={{
-              alignItems: "center",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <Label basic size='large'>
-              Percentages
-            </Label>
-            <Radio
-              toggle
-              checked={!tableData.percentage}
-              onClick={() =>
-                dispatch({
-                  type: ActionKeys.SWITCH_PERCENTAGES,
-                })
-              }
-            />
-            <Label basic size='large'>
-              Rarity
-            </Label>
           </Form.Field>
         </Form>
       </Segment>
       <Segment id='secondary-config'>
         <Form>
           <Form.Field>
-            <Label
-              basic
-              size='large'
-              style={{
-                marginRight: "8px",
-              }} /*TODO: Get the Label and the Dropdown on the same line*/
-            >
-              Games:
-            </Label>
+            <label>Games:</label>
             <Dropdown
               fluid
               multiple
